@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: ei-mobly
+Version: 0.1.0
+Summary: A library for controlling system level settings on Android devices using Mobly.
+Author: Aditya Patel
+Author-email: aditya.patel@einfochips.com
+License: MIT
