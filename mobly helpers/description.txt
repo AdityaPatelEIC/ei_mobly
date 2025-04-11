@@ -1,0 +1,5 @@
+In order to be able to automate client device
+1. Install com.google.android.mobly.snippet.uiautomator.apk
+=> This will help in enabling UI automation
+2. Install mobly-bundled-snippets-debug.apk
+=> This will help in the system level API interactions such as Wi-Fi and Bluetooth
