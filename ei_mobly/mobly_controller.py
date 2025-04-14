@@ -87,13 +87,13 @@ class MoblyController:
         self.ble.turn_off_bluetooth_on_all_devices(devices)
 
     def get_bluetooth_scan_result(self, device):
-        self.ble.get_bluetooth_scan_result(device)
+        return self.ble.get_bluetooth_scan_result(device)
 
     def get_bluetooth_scan_result_on_devices(self, *args):
-        self.ble.get_bluetooth_scan_result_on_devices(*args)
+        return self.ble.get_bluetooth_scan_result_on_devices(*args)
 
     def get_bluetooth_scan_result_on_all_devices(self, devices):
-        self.ble.get_bluetooth_scan_result_on_all_devices(devices)
+        return self.ble.get_bluetooth_scan_result_on_all_devices(devices)
 
     """ALL THE METHODS RELATED TO QUICK SETTINGS"""
     def switch_aeroplane_mode(self, device, selector, mode):
