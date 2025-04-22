@@ -26,7 +26,7 @@ class QuickSettings:
                 raise SelectorError("No selector has been provided")
             else:
                 raise ModeError("No mode has been provided")
-        if not get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'ui':
             switch_to_ui_snippet(device)
         device.ui.openQuickSettings()
         time.sleep(1)

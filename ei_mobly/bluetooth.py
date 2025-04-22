@@ -14,7 +14,7 @@ class Bluetooth:
     def turn_on_bluetooth(self, device=None):
         if device is None:
             raise DeviceError("No device has been provided")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         device.api.btEnable()
 
@@ -29,7 +29,7 @@ class Bluetooth:
     def turn_off_bluetooth(self, device=None):
         if device is None:
             raise DeviceError("No device has been provided")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         device.api.btDisable()
 
@@ -47,7 +47,7 @@ class Bluetooth:
             raise DeviceError("No device has been provided")
         if device.is_emulator:
             raise EmulatorError("Bluetooth scan is not possible on Emulator devices")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         result = device.api.btDiscoverAndGetResults()
         device_name = str(device).split('|')[1].replace('>', '')

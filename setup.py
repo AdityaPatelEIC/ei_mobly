@@ -7,7 +7,8 @@ setup(
     packages=find_packages(),  # Automatically find all packages in the directory
     install_requires=[
         'mobly',  # Make sure Mobly is installed as a dependency
-        'snippet_uiautomator'
+        'snippet_uiautomator',
+        'colorlog'
     ],
     description="A library for controlling system level settings on Android devices using Mobly.",
     author="Aditya Patel",

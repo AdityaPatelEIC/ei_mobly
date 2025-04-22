@@ -1,7 +1,7 @@
 from .controller import return_devices
 from .wifi import *
 from .globals import *
-
+from snippet_uiautomator import uiautomator
 
 def get_device_object(udid):
     devices = return_devices()
@@ -23,17 +23,37 @@ def is_device_emulator(device=None):
 def switch_to_api_snippet(device=None):
     if device is None:
         raise DeviceError("No device has been provided")
-    device.unload_snippet('ui')
+    last_snippet = get_last_snippet(device)
+    if last_snippet == 'ui':
+        device.unload_snippet('ui')
+    else:
+        device.services.unregister('uiautomator')
     device.load_snippet('api', 'com.google.android.mobly.snippet.bundled')
-    set_last_snippet_ui(device, False)
+    set_last_snippet(device, 'api')
 
 
 def switch_to_ui_snippet(device=None):
     if device is None:
         raise DeviceError("No device has been provided")
-    device.unload_snippet('api')
+    last_snippet = get_last_snippet(device)
+    if last_snippet == 'api':
+        device.unload_snippet('api')
+    else:
+        device.services.unregister('uiautomator')
     device.load_snippet('ui', 'com.google.android.mobly.snippet.uiautomator')
-    set_last_snippet_ui(device, True)
+    set_last_snippet(device, 'ui')
+
+
+def switch_to_automator_snippet(device=None):
+    if device is None:
+        raise DeviceError("No device has been provided")
+    last_snippet = get_last_snippet(device)
+    if last_snippet == 'api':
+        device.unload_snippet('api')
+    else:
+        device.unload_snippet('ui')
+    device.services.register(uiautomator.ANDROID_SERVICE_NAME, uiautomator.UiAutomatorService)
+    set_last_snippet(device, 'automator')
 
 
 def open_application(device, app_package, app_activity, no_reset=True):

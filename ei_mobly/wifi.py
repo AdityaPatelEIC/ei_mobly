@@ -25,7 +25,7 @@ class WiFi:
     def turn_on_wifi(self, device=None):
         if device is None:
             raise DeviceError("No device has been provided")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         device.api.wifiEnable()
 
@@ -40,7 +40,7 @@ class WiFi:
     def turn_off_wifi(self, device=None):
         if device is None:
             raise DeviceError("No device has been provided")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         device.api.wifiDisable()
 
@@ -56,7 +56,7 @@ class WiFi:
         if device.is_emulator:
             raise EmulatorError("Emulator devices could not be connect with real wifi network")
         if wifi_name and wifi_password:
-            if get_last_snippet_ui(device):
+            if get_last_snippet(device) != 'api':
                 switch_to_api_snippet(device)
             device.api.wifiConnectSimple(wifi_name, wifi_password)
         else:
@@ -78,7 +78,7 @@ class WiFi:
     def is_wifi_connected(self, device=None):
         if device is None:
             raise DeviceError("No device has been provided")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         device.api.isWifiConnected()
         return device.api.isWifiConnected()
@@ -105,7 +105,7 @@ class WiFi:
                 raise WiFiError("WiFi Name has not been provided")
         if device.is_emulator:
             raise EmulatorError("Emulator devices could not be connect with real wifi network")
-        if get_last_snippet_ui(device):
+        if get_last_snippet(device) != 'api':
             switch_to_api_snippet(device)
         conn_info = device.api.wifiGetConnectionInfo()
         if conn_info['SSID'] == wifi_name:
