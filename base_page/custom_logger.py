@@ -13,6 +13,9 @@ def customLogger():
     logger = logging.getLogger(log_name)
     logger.setLevel(logging.INFO)
 
+    # Prevent duplicate logs
+    logger.propagate = False
+
     # Avoid adding multiple handlers
     if not logger.handlers:
         # Console handler

@@ -3,7 +3,7 @@ from .quick_settings import *
 from .utils import *
 from .controller import *
 from .bluetooth import *
-
+from base_page.element_interactions import *
 
 class MoblyController:
     def __init__(self):
@@ -102,4 +102,12 @@ class MoblyController:
     """ALL THE METHODS RELATED TO INTERACTIONS WITH APPLICATION"""
     def open_application(self, device, app_package, app_activity, no_reset=True):
         open_application(device, app_package, app_activity, no_reset)
+
+    """ALL THE METHODS RELATED TO ELEMENT INTERACTIONS"""
+    def get_element(self, device, locator_type, locator_value, timeout=15):
+        return get_element(device, locator_type, locator_value, timeout)
+
+    def get_elements(self, device, locator_type, locator_value, timeout=15):
+        return get_elements(device, locator_type, locator_value, timeout)
+
 
