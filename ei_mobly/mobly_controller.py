@@ -110,4 +110,9 @@ class MoblyController:
     def get_elements(self, device, locator_type, locator_value, timeout=15):
         return get_elements(device, locator_type, locator_value, timeout)
 
+    def click_element(self, device, locator_type, locator_value, timeout=15):
+        click_element(device, locator_type, locator_value, timeout)
+
+    def long_click_element(self, device, locator_type, locator_value, timeout=15):
+        long_click_element(device, locator_type, locator_value, timeout)
 
