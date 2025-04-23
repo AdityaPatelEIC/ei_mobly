@@ -62,7 +62,7 @@ def click_and_hold_element(device, locator_type, locator_value, hold_time, timeo
     try:
         element = wait_for_element(device, locator_type, locator_value, timeout)
         if element is not None:
-            if element.click(_WAIT_TIME = datetime.timedelta(seconds=timeout)):
+            if element.click(_HOLD_WAIT_TIME):
                 log.info(f"Clicked on element with locator type {locator_type} and locator value {locator_value} for {hold_time} seconds")
             else:
                 log.error(f"Failed to click on element with locator type {locator_type} and locator value {locator_value}")
