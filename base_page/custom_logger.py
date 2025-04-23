@@ -22,7 +22,7 @@ def customLogger():
         console_handler = logging.StreamHandler()
         console_handler.setLevel(logging.DEBUG)
 
-        # Colored formatter
+        # Colored formatter with filename and line number for certain log levels
         formatter = ColoredFormatter(
             fmt="%(log_color)s%(asctime)s - %(levelname)s - %(message)s",
             datefmt="%d/%m/%y %I:%M:%S %p %A",
@@ -34,6 +34,16 @@ def customLogger():
                 'CRITICAL': 'bold_red',
             }
         )
+
+        # Create filter for ERROR, WARNING, CRITICAL
+        def add_filename_line_num(record):
+            # Add filename and line number for ERROR, WARNING, CRITICAL
+            if record.levelname in ['ERROR', 'WARNING', 'CRITICAL']:
+                record.msg = f"{record.filename}:{record.lineno} - {record.msg}"
+            return record
+
+        # Set the custom filter
+        console_handler.addFilter(add_filename_line_num)
         console_handler.setFormatter(formatter)
 
         # Add handler to logger
