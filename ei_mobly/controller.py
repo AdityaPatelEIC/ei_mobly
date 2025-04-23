@@ -27,6 +27,8 @@ def close_device_connections():
         last_snippet = get_last_snippet(device)
         if last_snippet == 'automator':
             device.services.unregister('uiautomator')
-        else:
+        elif last_snippet == 'automator':
+            device.unload_snippet(last_snippet)
+        elif last_snippet == 'ui':
             device.unload_snippet(last_snippet)
     destroy(_ANDROID_DEVICES_LIST)
