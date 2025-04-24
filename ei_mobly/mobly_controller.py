@@ -3,16 +3,18 @@ from .quick_settings import *
 from .utils import *
 from .controller import *
 from .bluetooth import *
-from base_page.element_interactions import ElementInteractions
+from base_page.mobly_element_interactions import MoblyElementInteractions
+
 
 class MoblyController:
     def __init__(self):
         self.wifi = WiFi()
         self.qs = QuickSettings()
         self.ble = Bluetooth()
-        self.ele_interaction = ElementInteractions()
+        self.ele_interaction = MoblyElementInteractions()
 
     """ALL THE METHODS RELATED TO OPERATION WITH THE DEVICES"""
+
     def get_device_object(self, device_id):
         return get_device_object(device_id)
 
@@ -23,6 +25,7 @@ class MoblyController:
         return is_device_emulator(device)
 
     """ALL THE METHODS RELATED TO OPERATION WITH THE Wi-Fi"""
+
     def turn_on_wifi(self, device):
         self.wifi.turn_on_wifi(device)
 
@@ -69,6 +72,7 @@ class MoblyController:
         return self.wifi.is_wifi_connected_to_all_devices(devices, wifi_name=wifi_name)
 
     """ALL THE METHODS RELATED TO OPERATION WITH THE BLUETOOTH"""
+
     def turn_on_bluetooth(self, device):
         self.ble.turn_on_bluetooth(device)
 
@@ -97,14 +101,17 @@ class MoblyController:
         return self.ble.get_bluetooth_scan_result_on_all_devices(devices)
 
     """ALL THE METHODS RELATED TO QUICK SETTINGS"""
+
     def switch_aeroplane_mode(self, device, selector, mode):
         self.qs.switch_aeroplane_mode(device, selector, mode)
 
     """ALL THE METHODS RELATED TO INTERACTIONS WITH APPLICATION"""
+
     def open_application(self, device, app_package, app_activity, no_reset=True):
         open_application(device, app_package, app_activity, no_reset)
 
     """ALL THE METHODS RELATED TO ELEMENT INTERACTIONS"""
+
     def get_element(self, device, locator_type, locator_value, timeout=15):
         return self.ele_interaction.get_element(device, locator_type, locator_value, timeout)
 
@@ -118,5 +125,4 @@ class MoblyController:
         self.ele_interaction.long_click_element(device, locator_type, locator_value, timeout)
 
     def click_and_hold_element(self, device, locator_type, locator_value, hold_time=2, timeout=15):
-        self.ele_interaction.click_and_hold_element(device, locator_type ,locator_value, hold_time, timeout)
-
+        self.ele_interaction.click_and_hold_element(device, locator_type, locator_value, hold_time, timeout)
