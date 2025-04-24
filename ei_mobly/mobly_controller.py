@@ -3,7 +3,7 @@ from .quick_settings import *
 from .utils import *
 from .controller import *
 from .bluetooth import *
-from base_page.element_interactions import ElementInteractions()
+from base_page.element_interactions import ElementInteractions
 
 class MoblyController:
     def __init__(self):
