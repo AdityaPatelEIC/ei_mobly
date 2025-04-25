@@ -60,4 +60,4 @@ class ElementInteractionsController:
         self.ele_interaction.clear_element_text_on_devices(*args, locator_type=locator_type, locator_value=locator_value, timeout=timeout)
 
     def clear_element_text_on_all_devices(self, devices, locator_type, locator_value, timeout=15):
-        self.ele_interaction.clear_element_text_on_devices(devices, locator_type, locator_value, timeout)
+        self.ele_interaction.clear_element_text_on_all_devices(devices, locator_type, locator_value, timeout)

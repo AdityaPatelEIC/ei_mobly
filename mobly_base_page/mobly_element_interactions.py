@@ -111,12 +111,12 @@ class MoblyElementInteractions:
         for device in devices:
             self.set_element_text(device, locator_type, locator_value, text, timeout)
 
-    def clear_element_text(self, device, locator_type, locator_value, text, timeout):
+    def clear_element_text(self, device, locator_type, locator_value, timeout):
         log = customLogger()
         try:
             element = self.wt_syn.wait_for_element(device, locator_type, locator_value, timeout)
             if element is not None:
-                if element.clear_text(text):
+                if element.clear_text():
                     log.info(f"Cleared existing text from the element with locator type {locator_type} and locator "
                              f"value {locator_value}")
                 else:
@@ -127,4 +127,8 @@ class MoblyElementInteractions:
 
     def clear_element_text_on_devices(self, *args, locator_type, locator_value, timeout):
         for device in args:
+            self.clear_element_text(device, locator_type, locator_value, timeout)
+
+    def clear_element_text_on_all_devices(self, devices, locator_type, locator_value, timeout):
+        for device in devices:
             self.clear_element_text(device, locator_type, locator_value, timeout)
