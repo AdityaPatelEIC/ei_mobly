@@ -1,4 +1,4 @@
-from base_page.mobly_element_interactions import MoblyElementInteractions
+from mobly_base_page.mobly_element_interactions import MoblyElementInteractions
 
 class ElementInteractionsController:
     def __init__(self):

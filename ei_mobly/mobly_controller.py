@@ -1,9 +1,9 @@
 from .utils import *
 from .controller import *
-from controllers.mobly_wifi_controller import WiFiController
-from controllers.mobly_bluetooth_controller import BluetoothController
-from controllers.mobly_quick_settings_controller import QuickSettingsController
-from controllers.mobly_element_interactions_controller import ElementInteractionsController
+from mobly_controllers.mobly_wifi_controller import WiFiController
+from mobly_controllers.mobly_bluetooth_controller import BluetoothController
+from mobly_controllers.mobly_quick_settings_controller import QuickSettingsController
+from mobly_controllers.mobly_element_interactions_controller import ElementInteractionsController
 
 
 class MoblyController(WiFiController, BluetoothController, QuickSettingsController, ElementInteractionsController):
