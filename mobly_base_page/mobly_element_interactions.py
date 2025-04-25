@@ -97,9 +97,9 @@ class MoblyElementInteractions:
             element = self.wt_syn.wait_for_element(device, locator_type, locator_value, timeout)
             if element is not None:
                 if element.set_text(text):
-                    log.info(f"Set text = {text} on element with locator type {locator_type} and locator value {locator_value}")
+                    log.info(f"Set text = \"{text}\" on element with locator type {locator_type} and locator value {locator_value}")
                 else:
-                    log.error(f"Failed to set text {text} on element with locator type {locator_type} and locator value {locator_value}")
+                    log.error(f"Failed to set text \"{text}\" on element with locator type {locator_type} and locator value {locator_value}")
         except Exception as e:
             log.error(f"Element not found with {locator_type} = {locator_value}. :Error-{e}")
 
