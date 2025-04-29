@@ -208,4 +208,11 @@ def xpath_converter(original_xpath):
 necessary until we switch to webview in mobile application then we will have to deal with div and such') # 
 xpath_value = "//div[@id='header']" # x_path_maker(xpath_value)
 
+Also still not implemented xpaths like this //Button[@text='Submit']
+only partial tag like Button, TextView or something. I don't find much use of the such xpath so skipping it for now
+and focusing on other things. If requirement comes to handle such cases as well.
+HINT: use the clazzMatches with regular expression and that's it.
+OUTPUT: would be something like this (clazzMatches=".*Button$) which is already implemented and remember to do the same
+for this one also.
+
 """
