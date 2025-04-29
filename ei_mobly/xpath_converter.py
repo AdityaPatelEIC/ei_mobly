@@ -163,7 +163,9 @@ def xpath_converter(original_xpath):
         tags_wildcards = xpath
 
     if re.search(r'[a-zA-Z]', tags_wildcards.replace('//', '')):  # If there are alphabets, it's likely a tag
-        components = tags_wildcards.split('//')
+
+        # Split the string by either '/' or '//'
+        components = re.split(r'/+', tags_wildcards)
 
         # Use a regular expression to match valid tags
         pattern = r'\S+\.\S+\.[A-Za-z]+'
