@@ -151,9 +151,6 @@ def xpath_converter(original_xpath):
     else:
         xpath = original_xpath
 
-    print(f"XPath without index: {xpath}")
-    print(f"Index: {index}")
-
     # First, capture the condition (inside [])
     condition_pattern = r'\[(.*?)\]$'
 
@@ -165,47 +162,44 @@ def xpath_converter(original_xpath):
     else:
         tags_wildcards = xpath
 
-    print("Tags/Wildcards:", tags_wildcards)
-
-    print(f"Condition: {condition}")
     if re.search(r'[a-zA-Z]', tags_wildcards.replace('//', '')):  # If there are alphabets, it's likely a tag
-        if re.search(r'[^a-zA-Z.]', tags_wildcards.replace('//', '')):  # If anything else (like *, etc.), it's a
-            # combination of tag and wildcard
-            print("Tags/Wildcards: Combination of tags and wildcards")
-        else:
-            print("Tags/Wildcards: Tags only")
-            # Split the string by the '//' delimiter, ignoring empty strings
-            components = tags_wildcards.split('//')
+        components = tags_wildcards.split('//')
 
-            # Use a regular expression to match valid tags
-            pattern = r'\S+\.\S+\.[A-Za-z]+'
+        # Use a regular expression to match valid tags
+        pattern = r'\S+\.\S+\.[A-Za-z]+'
 
-            # Apply the regex pattern to filter and extract valid tags
-            matches = [component for component in components if re.match(pattern, component)]
+        # Apply the regex pattern to filter and extract valid tags
+        matches = [component for component in components if re.match(pattern, component)]
 
-            print('separated tags', matches)
-            print(generate_chained_tags_calls(matches))
-            tags_mobly_xpath = generate_chained_tags_calls(matches)
-            if condition:
-                all_conditions_combinations = generate_combinations(condition)
-                for combination in all_conditions_combinations:
-                    extracted_conditions = extract_xpath_conditions_with_logical_operators(combination)
-                    print(generate_condition_method_calls(extracted_conditions))
-                    if index:
-                        final_mobly_xpath = f"{tags_mobly_xpath}.child{generate_condition_method_calls(extracted_conditions)[:-1]}, index={index})"
-                    else:
-                        final_mobly_xpath = f"{tags_mobly_xpath}.child{generate_condition_method_calls(extracted_conditions)}"
-                    converted_mobly_xpath.append(final_mobly_xpath)
-            else:
+        tags_mobly_xpath = generate_chained_tags_calls(matches)
+        if condition:
+            all_conditions_combinations = generate_combinations(condition)
+            for combination in all_conditions_combinations:
+                extracted_conditions = extract_xpath_conditions_with_logical_operators(combination)
                 if index:
-                    tags_mobly_xpath = tags_mobly_xpath[:-1] + f', index={index})'
-                    converted_mobly_xpath.append(tags_mobly_xpath)
+                    final_mobly_xpath = f"{tags_mobly_xpath}.child{generate_condition_method_calls(extracted_conditions)[:-1]}, index={index})"
                 else:
-                    converted_mobly_xpath.append(tags_mobly_xpath)
-            print(converted_mobly_xpath)
-            return converted_mobly_xpath
+                    final_mobly_xpath = f"{tags_mobly_xpath}.child{generate_condition_method_calls(extracted_conditions)}"
+                converted_mobly_xpath.append(final_mobly_xpath)
+        else:
+            if index:
+                tags_mobly_xpath = tags_mobly_xpath[:-1] + f', index={index})'
+                converted_mobly_xpath.append(tags_mobly_xpath)
+            else:
+                converted_mobly_xpath.append(tags_mobly_xpath)
+        return converted_mobly_xpath
+
     else:
-        print("Tags/Wildcards: Wildcard only")
+        if condition:
+            all_conditions_combinations = generate_combinations(condition)
+            for combination in all_conditions_combinations:
+                extracted_conditions = extract_xpath_conditions_with_logical_operators(combination)
+                if index:
+                    final_mobly_xpath = f"{generate_condition_method_calls(extracted_conditions)[:-1]}, index={index})"
+                else:
+                    final_mobly_xpath = f"{generate_condition_method_calls(extracted_conditions)}"
+                converted_mobly_xpath.append(final_mobly_xpath)
+            return converted_mobly_xpath
 
 
 """# print('\n\nRemember to include these afterward also. For now keeping it simple. Still I don't think it will be 
