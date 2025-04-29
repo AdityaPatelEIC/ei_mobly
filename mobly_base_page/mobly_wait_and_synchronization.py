@@ -4,6 +4,7 @@ import time
 from .mobly_custom_logger import customLogger
 from ei_mobly.globals import *
 from ei_mobly.utils import switch_to_ui_snippet, switch_to_automator_snippet
+from ei_mobly.xpath_converter import xpath_converter
 
 
 class MoblyWaitAndSynchronization:
@@ -24,7 +25,7 @@ class MoblyWaitAndSynchronization:
         }
 
         # Get the locator method based on the locator_type
-        locator_func = locator_map.get(locator_type.lower())
+        locator_func = locator_map.get(locator_type)
 
         if locator_func:
             element_exists = locator_func(locator_value).wait.exists(_WAIT_TIME)
@@ -33,6 +34,19 @@ class MoblyWaitAndSynchronization:
                 return element
             else:
                 raise Exception(f"Element is not visible on the current window within {timeout}")
+        elif locator_type == 'xpath':
+            mobly_xpath = xpath_converter(locator_value)
+            start = time.time()
+            while time.time() - start < timeout:
+                for selector in mobly_xpath:
+                    selector_code = f"device.ui{selector}"
+                    if eval(selector_code).exists:
+                        element = eval(selector_code)
+                        return element
+                time.sleep(1)
+            else:
+                raise Exception(f"Element is not visible on the current window within {timeout}")
+                return element
         else:
             log.error(f"Unsupported locator type: {locator_type}")
             return None
