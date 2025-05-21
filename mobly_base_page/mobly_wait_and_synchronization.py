@@ -1,4 +1,5 @@
 import datetime
+import re
 import time
 
 from .mobly_custom_logger import customLogger
@@ -105,6 +106,58 @@ class MoblyWaitAndSynchronization:
                 return elements
             else:
                 raise Exception(f"Elements are not visible on the current window within {timeout}")
+        elif locator_type == 'xpath':
+            if get_last_snippet(device) != 'automator':
+                switch_to_automator_snippet(device)
+            mobly_xpath = xpath_converter(locator_value)
+            start = time.time()
+            while time.time() - start < timeout:
+                for original_selector in mobly_xpath:
+                    selector = self.replace_last_child_with_find(original_selector)
+                    if 'find' in selector:
+                        selector_code = f"device.ui{selector}"
+                        if eval(f"device.ui{original_selector}.exists"):
+                            elements = []
+                            elements_dict = eval(selector_code)
+                            if elements_dict:
+                                for element_data in elements_dict:
+                                    if element_data['packageName'] != 'com.android.systemui':
+                                        keys_to_extract = [
+                                            'className', 'text', 'resourceId', 'packageName',
+                                            'enabled', 'clickable', 'checkable', 'checked',
+                                            'focusable', 'focused', 'longClickable', 'scrollable', 'selected'
+                                        ]
+                                        # Extract the required fields using dictionary comprehension
+                                        extracted_data = {key: element_data[key] for key in keys_to_extract}
+                                        element = device.ui(**extracted_data)
+                                        elements.append(element)
+                                return elements
+                    else:
+                        locator_type, locator_value = self.extract_locator_info(selector)
+                        elements = self.wait_for_elements(device, locator_type, locator_value, timeout)
+                        if elements:
+                            return elements
+                time.sleep(1)
+            else:
+                raise Exception(f"Element is not visible on the current window within {timeout}")
         else:
             log.error(f"Unsupported locator type: {locator_type}")
             return None
+
+    def replace_last_child_with_find(self, xpath_string):
+        index = xpath_string.rfind('.child')
+        if index != -1:
+            return xpath_string[:index] + '.find' + xpath_string[index + len('.child'):]
+        return xpath_string
+
+    def extract_locator_info(self, selector_string):
+        match = re.search(r'\(\s*(\w+)\s*=\s*"([^"]+)"\s*\)', selector_string)
+        if match:
+            locator_type = match.group(1)
+            if locator_type == 'resourceId':
+                locator_type = 'id'
+            elif locator_type == 'clazz':
+                locator_type = 'class'
+            locator_value = match.group(2)
+            return locator_type, locator_value
+        return None, None
