@@ -91,6 +91,29 @@ class MoblyElementInteractions:
         for device in devices:
             self.click_and_hold_element(device, locator_type, locator_value, hold_time, timeout)
 
+    def click_element_n_times(self, device, locator_type, locator_value, n, timeout):
+        log = customLogger()
+        try:
+            element = self.wt_syn.wait_for_element(device, locator_type, locator_value, timeout)
+            if element is not None:
+                for i in range(1, n+1):
+                    if not element.click():
+                        log.error(f"Failed to click on {i} iteration on element with locator type {locator_type} and locator value {locator_value}")
+                        break
+                else:
+                    log.info(f"Successfully clicked on element {n} times with locator type {locator_type} and locator value {locator_value}")
+
+        except Exception as e:
+            log.error(f"Element not found with {locator_type} = {locator_value}. :Error-{e}")
+
+    def click_element_n_times_on_devices(self, *args, locator_type, locator_value, n, timeout):
+        for device in args:
+            self.click_element_n_times(device, locator_type, locator_value, n, timeout)
+
+    def click_element_n_times_on_all_devices(self, devices, locator_type, locator_value, n, timeout):
+        for device in devices:
+            self.click_element_n_times(device, locator_type, locator_value, n, timeout)
+
     def set_element_text(self, device, locator_type, locator_value, text, timeout):
         log = customLogger()
         try:
