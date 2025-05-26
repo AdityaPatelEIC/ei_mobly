@@ -17,7 +17,7 @@ class MoblyGestureAndTouch:
         assert 1 <= strength_percent <= 100, "strength_percent must be between 1 and 100"
 
         # Scale strength: 50 → 70 proportion
-        scroll_percent = int((strength_percent * 70) / 50)
+        scroll_percent = int((strength_percent * 100) / 50)
 
         if get_last_snippet(device) != 'automator':
             switch_to_automator_snippet(device)
@@ -33,7 +33,7 @@ class MoblyGestureAndTouch:
         """
         assert 1 <= strength_percent <= 100, "strength_percent must be between 1 and 100"
 
-        scroll_percent = int((strength_percent * 70) / 50)
+        scroll_percent = int((strength_percent * 100) / 50)
 
         if get_last_snippet(device) != 'automator':
             switch_to_automator_snippet(device)
