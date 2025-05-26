@@ -5,15 +5,17 @@ from mobly_controllers.mobly_bluetooth_controller import BluetoothController
 from mobly_controllers.mobly_quick_settings_controller import QuickSettingsController
 from mobly_controllers.mobly_element_interactions_controller import ElementInteractionsController
 from mobly_controllers.mobly_element_state_controller import ElementStateController
+from mobly_controllers.mobly_gesture_and_touch_controller import GestureAndTouchController
 
 
-class MoblyController(WiFiController, BluetoothController, QuickSettingsController, ElementInteractionsController, ElementStateController):
+class MoblyController(WiFiController, BluetoothController, QuickSettingsController, ElementInteractionsController, ElementStateController, GestureAndTouchController):
     def __init__(self):
         WiFiController.__init__(self)
         BluetoothController.__init__(self)
         QuickSettingsController.__init__(self)
         ElementInteractionsController.__init__(self)
         ElementStateController.__init__(self)
+        GestureAndTouchController.__init__(self)
 
     """ALL THE METHODS RELATED TO OPERATION WITH THE DEVICES"""
 
